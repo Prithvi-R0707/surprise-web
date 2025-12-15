@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Thuhina Sree ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+html,body{overflow-x:hidden;height:100%;transition:background 1s;}
+
+/* LOCK SCREEN */
+#lockScreen{
+  height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  background: linear-gradient(to bottom, #87ceeb, #b0e0e6);position:fixed;top:0;left:0;width:100%;z-index:1000;
+}
+#lockScreen input{padding:12px;margin:10px;font-size:16px;border-radius:8px;border:none;}
+#lockScreen button{
+  padding:12px 25px;font-size:16px;cursor:pointer;
+  background-color:#ff6f91;border:none;border-radius:10px;color:white;
+  box-shadow:0 4px 15px rgba(255,111,145,0.6);transition:0.3s;
+}
+#lockScreen button:hover{transform:scale(1.05);box-shadow:0 6px 20px rgba(255,111,145,0.8);}
+#passwordHint{color:#fff;margin-top:5px;opacity:0;transition:opacity 0.5s;font-size:14px;text-align:center;}
+#passwordHint.show{opacity:1;animation: blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+@keyframes shake {0%{transform:translateX(0);}25%{transform:translateX(-10px);}50%{transform:translateX(10px);}75%{transform:translateX(-10px);}100%{transform:translateX(0);}}
+
+/* HIDDEN */
+.hidden{display:none;}
+
+/* DARK MODE */
+body.dark{
+  background: linear-gradient(to bottom,#000022,#000033);
+  transition: background 1s,color 1s;
+}
+
+/* DAY BACKGROUND ELEMENTS */
+#sun{position:fixed;top:50px;right:50px;width:80px;height:80px;background:yellow;border-radius:50%;z-index:0;box-shadow:0 0 50px rgba(255,255,0,0.5);}
+.cloud{position:fixed;width:200px;height:60px;background:white;border-radius:50%;opacity:0.8;z-index:0;animation:cloudMove 60s linear infinite;}
+@keyframes cloudMove{0%{left:-250px;}100%{left:100%;}}
+
+/* NIGHT STARS */
+.star{position:fixed;width:2px;height:2px;background:white;border-radius:50%;opacity:0.8;animation:twinkle 2s infinite;}
+@keyframes twinkle{0%,100%{opacity:0.8;}50%{opacity:0;}}
+
+/* DARK TOGGLE */
+#darkToggle{
+  position:fixed;top:20px;right:20px;padding:10px;font-size:24px;cursor:pointer;
+  background: rgba(255,111,145,0.2); border:none; border-radius:10px; color:#fff; backdrop-filter:blur(5px);
+  transition: transform 0.3s; z-index:100;
+}
+#darkToggle:hover{transform:scale(1.1);}
+
+/* NAME & SUBTITLE */
+.center{text-align:center;margin:50px 0;}
+h1#name{font-size:3em;color:#ff6f91;text-shadow:0 0 20px #ff9a9e;animation:glow 2s infinite alternate;}
+.subtitle{font-size:1.5em;color:#ff6f91;text-shadow:0 0 15px #ff9a9e;text-align:center;}
+@keyframes glow{0%{text-shadow:0 0 5px #ff6f91,0 0 10px #ff6f91;}100%{text-shadow:0 0 25px #ff9a9e,0 0 35px #ff9a9e;}}
+
+/* LETTER CARD */
+.card{
+  max-width:700px;margin:50px auto;padding:30px;background:rgba(255,255,255,0.1);
+  border-radius:20px;backdrop-filter:blur(12px);box-shadow:0 0 25px rgba(255,111,145,0.3);
+  color:#fff;
+}
+.card h2{text-align:center;margin-bottom:20px;color:#ff6f91;text-shadow:0 0 15px #ff9a9e;}
+
+/* GALLERY CENTERED IMAGES */
+.heart-images{
+  display:flex;justify-content:center;align-items:center;gap:30px;margin:50px 0;flex-wrap:wrap;
+}
+.heart-images img{
+  width:30vw; max-width:250px; height:auto;
+  object-fit:cover;
+  border-radius:15px;
+  transition:transform 0.3s,box-shadow 0.3s;
+}
+.heart-images img:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px #ff6f91;
+}
+
+/* SCROLL INDICATOR */
+.scroll-indicator{text-align:center;font-size:2em;margin-top:20px;animation:bounce 2s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(10px);}}
+
+/* TIMERS */
+#counter,#relationshipTimer{text-align:center;font-size:2em;margin:30px 0;}
+
+/* VIDEO */
+.video-section{text-align:center;margin:50px 0;}
+video{width:80%;border-radius:20px;box-shadow:0 0 25px rgba(255,111,145,0.5);}
+
+/* CONFETTI */
+canvas#confetti{position:fixed;top:0;left:0;pointer-events:none;width:100%;height:100%;z-index:1000;}
+
+/* HEART CURSOR */
+.heart{position:fixed;width:15px;height:15px;pointer-events:none;
+  background-color:red;clip-path:polygon(50% 0%,61% 13%,75% 15%,85% 25%,85% 40%,75% 55%,50% 85%,25% 55%,15% 40%,15% 25%,25% 15%,39% 13%);
+  opacity:0.8;transform:translate(-50%,-50%) scale(1);animation:floatUp 1s forwards;}
+@keyframes floatUp{0%{transform:translate(-50%,-50%) scale(1);opacity:1;}100%{transform:translate(-50%,-150px) scale(0.5);opacity:0;}}
+
+/* FLOATING PETALS */
+.petal{position:fixed;width:20px;height:20px;background:#ff6f91;
+opacity:0.8;animation:floatPetal 5s linear forwards;}
+@keyframes floatPetal{0%{transform:translateY(100vh) rotate(0deg);opacity:0.8;}100%{transform:translateY(-200px) rotate(360deg);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lockScreen">
+  <h2>Enter Our Secret ❤️</h2>
+  <input type="password" id="password" placeholder="Our special word">
+  <button onclick="unlock()">Unlock</button>
+  <div id="passwordHint">Hint: It’s something that fills our hearts ❤️</div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="mainContent" class="hidden">
+  <button id="darkToggle">🌙</button>
+
+  <div class="center">
+    <h1 id="name"></h1>
+    <p class="subtitle">Celebrating 2 beautiful years together ❤️</p>
+  </div>
+
+  <div class="card">
+    <h2>💌 Letter</h2>
+    <p>
+      Thuhina Sree,<br><br>
+      Two years ago, we chose each other — and we keep choosing every day since.<br>
+      Not because it’s easy, but because it’s worth it.<br><br>
+      Thank you for being my comfort, my happiness, and my constant.<br>
+      Here’s to us — past, present, and all the tomorrows ❤️
+    </p>
+  </div>
+
+  <div class="scroll-indicator">⬇</div>
+
+  <div class="heart-images">
+    <img src="surpriseimage2.jpeg" alt="">
+    <img src="surpriseimage1.jpeg" alt="">
+    <img src="surpriseimage3.jpg" alt="">
+  </div>
+
+  <div id="counter"></div>
+  <div id="relationshipTimer"></div>
+
+  <section class="video-section">
+    <video src="surprisevideo.mp4" controls></video>
+  </section>
+</div>
+
+<div id="sun"></div>
+<div class="cloud" style="top:100px;animation-delay:0s;"></div>
+<div class="cloud" style="top:200px;animation-delay:20s;"></div>
+
+<canvas id="confetti"></canvas>
+
+<script>
+/* UNLOCK */
+function unlock(){
+  const password=document.getElementById('password').value.toLowerCase();
+  const hint=document.getElementById('passwordHint');
+  const lock=document.getElementById('lockScreen');
+  const main=document.getElementById('mainContent');
+  if(password==='love'){
+    lock.remove();
+    main.classList.remove('hidden');
+    startNameAnimation(); startCountdown(); startRelationshipTimer();
+    startConfetti(); startFloatingPetals(); createSparkles();
+    startBackgroundMusic();
+    addStars(false); // remove stars in day mode
+  } else{
+    hint.classList.add('show'); lock.style.animation='shake 0.5s';
+    setTimeout(()=>{hint.classList.remove('show'); lock.style.animation='';},3000);
+  }
+}
+
+/* DARK MODE */
+document.getElementById('darkToggle').addEventListener('click',()=>{
+  const dark = document.body.classList.toggle('dark');
+  if(dark){ addStars(true); document.getElementById('sun').style.display='none';}
+  else{ removeStars(); document.getElementById('sun').style.display='block';}
+});
+
+/* STARS FOR NIGHT */
+let starElements=[];
+function addStars(show){
+  removeStars();
+  if(!show) return;
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star'; s.style.left=Math.random()*window.innerWidth+'px';
+    s.style.top=Math.random()*window.innerHeight+'px'; document.body.appendChild(s);
+    starElements.push(s);
+  }
+}
+function removeStars(){starElements.forEach(s=>s.remove()); starElements=[];}
+
+/* NAME ANIMATION */
+function startNameAnimation(){
+  const nameEl=document.getElementById('name'); const name="For Thuhina Sree ❤️"; let i=0;
+  const interval=setInterval(()=>{nameEl.textContent+=name[i];i++;if(i>=name.length) clearInterval(interval);},200);
+}
+
+/* COUNTDOWN */
+function startCountdown(){
+  const counter=document.getElementById('counter'); const target=new Date('2025-12-25T00:00:00');
+  setInterval(()=>{const diff=target-new Date();if(diff<=0){counter.textContent="💖 Today is the special day! 💖"; return;}
+  const d=Math.floor(diff/(1000*60*60*24)); const h=Math.floor((diff/(1000*60*60))%24);
+  const m=Math.floor((diff/(1000*60))%60); const s=Math.floor((diff/1000)%60);
+  counter.textContent=`${d}d ${h}h ${m}m ${s}s`;},1000);
+}
+
+/* RELATIONSHIP TIMER */
+function startRelationshipTimer(){
+  const timer=document.getElementById('relationshipTimer'); const start=new Date('2023-12-25T00:00:00');
+  setInterval(()=>{const diff=new Date()-start; const d=Math.floor(diff/(1000*60*60*24));
+  const h=Math.floor((diff/(1000*60*60))%24); const m=Math.floor((diff/(1000*60))%60); const s=Math.floor((diff/1000)%60);
+  timer.textContent=`Together for ${d}d ${h}h ${m}m ${s}s ❤️`;},1000);
+}
+
+/* CONFETTI */
+function startConfetti(){
+  const canvas=document.getElementById('confetti'); const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+  const confetti=[]; for(let i=0;i<150;i++){confetti.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*6+4,d:Math.random()*150,color:`hsl(${Math.random()*360},100%,50%)`,tilt:Math.random()*10-10});}
+  function draw(){ctx.clearRect(0,0,canvas.width,canvas.height); confetti.forEach(c=>{ctx.beginPath();ctx.lineWidth=c.r/2;ctx.strokeStyle=c.color;
+  ctx.moveTo(c.x+c.tilt+c.r/4,c.y); ctx.lineTo(c.x+c.tilt,c.y+c.tilt+c.r/4); ctx.stroke();
+  c.y+=(Math.cos(c.d)+1+c.r/2)/2; c.x+=Math.sin(c.d); if(c.y>canvas.height){c.x=Math.random()*canvas.width;c.y=-10;}}); requestAnimationFrame(draw);}
+  draw();
+}
+
+/* FLOATING PETALS */
+function startFloatingPetals(){setInterval(()=>{const p=document.createElement('div'); p.className='petal';
+p.style.left=Math.random()*window.innerWidth+'px'; p.style.top=window.innerHeight+'px'; document.body.appendChild(p);
+setTimeout(()=>p.remove(),5000);},500);}
+
+/* SPARKLES */
+function createSparkles(){for(let i=0;i<80;i++){const s=document.createElement('div');s.className='sparkle';
+s.style.left=Math.random()*window.innerWidth+'px'; s.style.top=Math.random()*window.innerHeight+'px'; document.body.appendChild(s);}}
+
+/* HEART CURSOR */
+document.addEventListener('mousemove',(e)=>{const heart=document.createElement('div'); heart.className='heart';
+heart.style.left=e.clientX+'px'; heart.style.top=e.clientY+'px'; document.body.appendChild(heart); setTimeout(()=>heart.remove(),1000);});
+
+/* BACKGROUND MUSIC */
+/* BACKGROUND MUSIC */
+let music = new Audio('surpriseaudio.mpeg');
+music.loop = true;
+music.volume = 0;
+
+function startBackgroundMusic(){
+  music.play();
+  fadeInMusic();
+}
+
+function fadeInMusic(){
+  clearInterval(music.fadeInterval);
+  music.fadeInterval = setInterval(()=>{
+    if(music.volume < 0.5){
+      music.volume = Math.min(music.volume + 0.01, 0.5);
+    } else {
+      clearInterval(music.fadeInterval);
+    }
+  }, 100);
+}
+
+function fadeOutMusic(){
+  clearInterval(music.fadeInterval);
+  music.fadeInterval = setInterval(()=>{
+    if(music.volume > 0){
+      music.volume = Math.max(music.volume - 0.01, 0);
+    } else {
+      clearInterval(music.fadeInterval);
+      music.pause();
+    }
+  }, 100);
+}
+/* VIDEO MUSIC CONTROL */
+const video = document.querySelector('video');
+
+video.addEventListener('play', () => {
+  fadeOutMusic();   // 🎬 Video starts → BGM fades out
+});
+
+video.addEventListener('pause', () => {
+  music.play();
+  fadeInMusic();    // ⏸ Video paused → BGM fades in
+});
+
+video.addEventListener('ended', () => {
+  music.play();
+  fadeInMusic();    // ✅ Video ends → BGM fades in
+});
+
+</script>
+</body>
+</html>
