@@ -100,6 +100,13 @@ canvas#confetti{position:fixed;top:0;left:0;pointer-events:none;width:100%;heigh
   background-color:red;clip-path:polygon(50% 0%,61% 13%,75% 15%,85% 25%,85% 40%,75% 55%,50% 85%,25% 55%,15% 40%,15% 25%,25% 15%,39% 13%);
   opacity:0.8;transform:translate(-50%,-50%) scale(1);animation:floatUp 1s forwards;}
 @keyframes floatUp{0%{transform:translate(-50%,-50%) scale(1);opacity:1;}100%{transform:translate(-50%,-150px) scale(0.5);opacity:0;}}
+/* COUNTDOWN TIMER IN LOCK SCREEN */
+#lockScreen #counter {
+  color: #fff;
+  font-size: 2em;
+  margin-top: 20px;
+  text-align: center;
+}
 
 /* FLOATING PETALS */
 .petal{position:fixed;width:20px;height:20px;background:#ff6f91;
@@ -110,12 +117,17 @@ opacity:0.8;animation:floatPetal 5s linear forwards;}
 <body>
 
 <!-- LOCK SCREEN -->
+<!-- LOCK SCREEN -->
 <div id="lockScreen">
   <h2>Enter Our Secret ❤️</h2>
   <input type="password" id="password" placeholder="Our special word">
   <button onclick="unlock()">Unlock</button>
   <div id="passwordHint">Hint: It’s something that fills our hearts ❤️</div>
+
+  <!-- Countdown timer visible on lock screen -->
+  <div id="counter"></div>
 </div>
+
 
 <!-- MAIN CONTENT -->
 <div id="mainContent" class="hidden">
@@ -140,12 +152,12 @@ opacity:0.8;animation:floatPetal 5s linear forwards;}
   <div class="scroll-indicator">⬇</div>
 
   <div class="heart-images">
-    <img src="surpriseimage3.jpg" alt="">
     <img src="surpriseimage2.jpeg" alt="">
     <img src="surpriseimage1.jpeg" alt="">
+    <img src="surpriseimage3.jpg" alt="">
   </div>
 
-  <div id="counter"></div>
+  
   <div id="relationshipTimer"></div>
 
   <section class="video-section">
@@ -162,22 +174,23 @@ opacity:0.8;animation:floatPetal 5s linear forwards;}
 <script>
 /* UNLOCK */
 function unlock(){
-  const password=document.getElementById('password').value.toLowerCase();
-  const hint=document.getElementById('passwordHint');
-  const lock=document.getElementById('lockScreen');
-  const main=document.getElementById('mainContent');
-  if(password==='love'){
-    lock.remove();
-    main.classList.remove('hidden');
-    startNameAnimation(); startCountdown(); startRelationshipTimer();
-    startConfetti(); startFloatingPetals(); createSparkles();
-    startBackgroundMusic();
-    addStars(false); // remove stars in day mode
+  const password = document.getElementById('password').value.toLowerCase();
+  const hint = document.getElementById('passwordHint');
+
+  if(password === 'love'){
+    startCountdown(); // start countdown, timer visible on lock screen
   } else{
-    hint.classList.add('show'); lock.style.animation='shake 0.5s';
-    setTimeout(()=>{hint.classList.remove('show'); lock.style.animation='';},3000);
+    hint.classList.add('show'); 
+    const lock = document.getElementById('lockScreen');
+    lock.style.animation='shake 0.5s';
+    setTimeout(()=>{
+      hint.classList.remove('show'); 
+      lock.style.animation='';
+    },3000);
   }
 }
+
+
 
 /* DARK MODE */
 document.getElementById('darkToggle').addEventListener('click',()=>{
@@ -208,12 +221,45 @@ function startNameAnimation(){
 
 /* COUNTDOWN */
 function startCountdown(){
-  const counter=document.getElementById('counter'); const target=new Date('2025-12-25T00:00:00');
-  setInterval(()=>{const diff=target-new Date();if(diff<=0){counter.textContent="💖 Today is the special day! 💖"; return;}
-  const d=Math.floor(diff/(1000*60*60*24)); const h=Math.floor((diff/(1000*60*60))%24);
-  const m=Math.floor((diff/(1000*60))%60); const s=Math.floor((diff/1000)%60);
-  counter.textContent=`${d}d ${h}h ${m}m ${s}s`;},1000);
+  const counter = document.getElementById('counter'); 
+  const target = new Date('2025-12-25T00:00:00'); // set your desired date
+
+  const interval = setInterval(() => {
+    const diff = target - new Date();
+
+    if(diff <= 0){
+      clearInterval(interval);
+      counter.textContent = "💖 Today is the special day! 💖";
+
+      // Fade out lock screen and show main content
+      const lock = document.getElementById('lockScreen');
+      const main = document.getElementById('mainContent');
+
+      lock.style.transition = "opacity 1s";
+      lock.style.opacity = 0;
+
+      setTimeout(() => {
+        lock.remove();
+        main.classList.remove('hidden');
+        startNameAnimation(); 
+        startRelationshipTimer();
+        startConfetti(); 
+        startFloatingPetals(); 
+        createSparkles();
+        startBackgroundMusic();
+        addStars(false); // remove stars in day mode
+      }, 1000);
+
+    } else {
+      const d = Math.floor(diff/(1000*60*60*24));
+      const h = Math.floor((diff/(1000*60*60)) % 24);
+      const m = Math.floor((diff/(1000*60)) % 60);
+      const s = Math.floor((diff/1000) % 60);
+      counter.textContent = `${d}d ${h}h ${m}m ${s}s`;
+    }
+  }, 1000);
 }
+
 
 /* RELATIONSHIP TIMER */
 function startRelationshipTimer(){
@@ -296,10 +342,6 @@ video.addEventListener('ended', () => {
   music.play();
   fadeInMusic();    // ✅ Video ends → BGM fades in
 });
-
 </script>
 </body>
 </html>
-
-
-
